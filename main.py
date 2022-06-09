@@ -32,10 +32,11 @@ def transform(arg):
 
 
 if __name__ == '__main__':
-    start_date = '10.10.2007'
+    start_date = '10.10.2021'
     end_date = datetime.date.today().strftime('%d.%m.%Y')
-    url = f'https://cbr.ru/hd_base/dv/?UniDbQuery.Posted=True&UniDbQuery.From={start_date}' \
-          f'&UniDbQuery.To={end_date}&UniDbQuery.P1=4'
+    # url = f'https://cbr.ru/hd_base/dv/?UniDbQuery.Posted=True&UniDbQuery.From={start_date}'f'&UniDbQuery.To={end_date}&UniDbQuery.P1=4'
+    #Ключевая ставка
+    url = 'https://cbr.ru/hd_base/KeyRate/?UniDbQuery.Posted=True&UniDbQuery.From=03.06.2021&UniDbQuery.To=09.06.2022'
     df = transform(parse_cb(url))
 
     df.to_csv(f'{start_date} {end_date}.csv')
