@@ -25,8 +25,10 @@ def parse_cb(url):
 
 
 def transform(arg):
-    dates = [pd.to_datetime(el, format='%d.%m.%Y') for el in arg[0]]
-    values = [float(el.replace(' ', '').replace(',', '.')) for el in arg[1]]
+    dates = map(lambda el: pd.to_datetime(el, format='%d.%m.%Y'), arg[0])
+    values = map(lambda el: float(el.replace(' ', '').replace(',', '.')), arg[1])
+    # dates = [pd.to_datetime(el, format='%d.%m.%Y') for el in arg[0]]
+    # values = [float(el.replace(' ', '').replace(',', '.')) for el in arg[1]]
     data = pd.Series(data=values, index=dates)
     return data
 
