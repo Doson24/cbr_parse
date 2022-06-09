@@ -27,21 +27,27 @@ def parse_cb(url):
 def transform(arg):
     dates = map(lambda el: pd.to_datetime(el, format='%d.%m.%Y'), arg[0])
     values = map(lambda el: float(el.replace(' ', '').replace(',', '.')), arg[1])
+    # 0:00:00.251069
     # dates = [pd.to_datetime(el, format='%d.%m.%Y') for el in arg[0]]
     # values = [float(el.replace(' ', '').replace(',', '.')) for el in arg[1]]
+    # 0:00:00.249067
     data = pd.Series(data=values, index=dates)
+
     return data
 
 
 if __name__ == '__main__':
-    start_date = '10.10.2021'
+    start_date = '10.10.2020'
     end_date = datetime.date.today().strftime('%d.%m.%Y')
     # url = f'https://cbr.ru/hd_base/dv/?UniDbQuery.Posted=True&UniDbQuery.From={start_date}'f'&UniDbQuery.To={end_date}&UniDbQuery.P1=4'
     #Ключевая ставка
-    url = 'https://cbr.ru/hd_base/KeyRate/?UniDbQuery.Posted=True&UniDbQuery.From=03.06.2021&UniDbQuery.To=09.06.2022'
-    df = transform(parse_cb(url))
-
-    df.to_csv(f'{start_date} {end_date}.csv')
+    url = f'https://cbr.ru/hd_base/KeyRate/?UniDbQuery.Posted=True&UniDbQuery.From={start_date}&UniDbQuery.To={end_date}'
+    a = parse_cb(url)
+    st = datetime.datetime.now()
+    df = transform(a)
+    end = datetime.datetime.now() - st
+    print(end)
+    df.to_csv(f'data\\{start_date} {end_date}.csv')
 
     df.plot()
     plt.tight_layout()
